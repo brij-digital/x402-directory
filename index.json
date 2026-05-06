@@ -14,6 +14,7 @@
       "Open provider_url for provider-specific metadata.",
       "Open openapi_url to inspect available endpoints.",
       "Build the target x402 URL from x402_base_url plus the OpenAPI path.",
+      "Before calling brij_pay, inspect the OpenAPI operation and include every required query parameter, path parameter, header, and request body field.",
       "Call brij_pay with url, method, headers, and optional body.",
       "Return the provider response to the user.",
       "If payment fails, report the exact BRIJ or provider error."
