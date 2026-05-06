@@ -1,0 +1,22 @@
+{
+  "id": "fov",
+  "name": "FOV Email Finder and Verifier",
+  "description": "Email finder and verifier API for finding professional email addresses, verifying email deliverability, and searching emails by domain.",
+  "use_when": "Use when the user wants to find or verify an email address, enrich a lead, or discover emails for a company domain.",
+  "category": "sales",
+  "tags": [
+    "email",
+    "finder",
+    "verifier",
+    "leads",
+    "sales"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://fov.brij.fi",
+    "currency": "USDC"
+  },
+  "source_openapi_url": "https://fov.brij.fi/openapi.json",
+  "how_to_call": "Read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call BRIJ MCP tool brij_pay.",
+  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/fov.openapi.json"
+}

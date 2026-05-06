@@ -1,0 +1,22 @@
+{
+  "id": "travel",
+  "name": "BRIJ Flight API",
+  "description": "Flight API for paid flight search, escrow-backed booking intents, booking execution, refund requests, and Duffel order status lookup.",
+  "use_when": "Use when the user wants to search flights, create a booking intent, book a flight, request a refund, or check flight order status.",
+  "category": "travel",
+  "tags": [
+    "travel",
+    "flights",
+    "booking",
+    "duffel",
+    "escrow"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://travel.brij.fi",
+    "currency": "USDC"
+  },
+  "source_openapi_url": "https://travel.brij.fi/openapi.json",
+  "how_to_call": "Read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call BRIJ MCP tool brij_pay.",
+  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/travel.openapi.json"
+}
