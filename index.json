@@ -12,8 +12,8 @@
         "communication"
       ],
       "payment_mode": "whitelisted",
-      "provider_url": "./providers/agentmail.json",
-      "openapi_url": "./openapi/agentmail.openapi.json"
+      "provider_url": "https://brij-digital.github.io/x402-directory/providers/agentmail.json",
+      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/agentmail.openapi.json"
     },
     {
       "id": "exa-search",
@@ -28,8 +28,8 @@
         "curated"
       ],
       "payment_mode": "whitelisted",
-      "provider_url": "./providers/exa-search.json",
-      "openapi_url": "./openapi/exa-search.openapi.json"
+      "provider_url": "https://brij-digital.github.io/x402-directory/providers/exa-search.json",
+      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/exa-search.openapi.json"
     },
     {
       "id": "messari-news",
@@ -44,8 +44,8 @@
         "curated"
       ],
       "payment_mode": "whitelisted",
-      "provider_url": "./providers/messari-news.json",
-      "openapi_url": "./openapi/messari-news.openapi.json"
+      "provider_url": "https://brij-digital.github.io/x402-directory/providers/messari-news.json",
+      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/messari-news.openapi.json"
     },
     {
       "id": "nansen-wallet-intel",
@@ -61,8 +61,8 @@
         "curated"
       ],
       "payment_mode": "whitelisted",
-      "provider_url": "./providers/nansen-wallet-intel.json",
-      "openapi_url": "./openapi/nansen-wallet-intel.openapi.json"
+      "provider_url": "https://brij-digital.github.io/x402-directory/providers/nansen-wallet-intel.json",
+      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/nansen-wallet-intel.openapi.json"
     },
     {
       "id": "quicknode-solana-mainnet",
@@ -77,8 +77,8 @@
         "curated"
       ],
       "payment_mode": "whitelisted",
-      "provider_url": "./providers/quicknode-solana-mainnet.json",
-      "openapi_url": "./openapi/quicknode-solana-mainnet.openapi.json"
+      "provider_url": "https://brij-digital.github.io/x402-directory/providers/quicknode-solana-mainnet.json",
+      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/quicknode-solana-mainnet.openapi.json"
     }
   ]
 }

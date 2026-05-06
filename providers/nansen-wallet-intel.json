@@ -16,5 +16,5 @@
     "http_base_url": "https://api.nansen.ai",
     "currency": "USDC"
   },
-  "openapi_url": "./openapi/nansen-wallet-intel.openapi.json"
+  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/nansen-wallet-intel.openapi.json"
 }

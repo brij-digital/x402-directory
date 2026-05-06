@@ -15,5 +15,5 @@
     "http_base_url": "https://x402.quicknode.com",
     "currency": "USDC"
   },
-  "openapi_url": "./openapi/quicknode-solana-mainnet.openapi.json"
+  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/quicknode-solana-mainnet.openapi.json"
 }

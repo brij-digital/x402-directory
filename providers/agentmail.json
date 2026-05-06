@@ -14,5 +14,5 @@
     "http_base_url": "https://x402.api.agentmail.to",
     "currency": "USDC"
   },
-  "openapi_url": "./openapi/agentmail.openapi.json"
+  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/agentmail.openapi.json"
 }

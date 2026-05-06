@@ -9,6 +9,7 @@ BRIJ Wallet handles payment through its MCP/payment runtime. This directory help
 ## Files
 
 ```text
+index.html
 index.json
 providers/
 openapi/
@@ -19,12 +20,18 @@ openapi/
 Start with:
 
 ```text
-https://raw.githubusercontent.com/brij-digital/x402-directory/main/index.json
+https://brij-digital.github.io/x402-directory/index.json
 ```
 
-Then open a provider file and its OpenAPI JSON.
+Then open a provider file and its OpenAPI JSON. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
 
-An AI assistant can read this repo, choose the right endpoint, then call it through BRIJ Wallet.
+An AI assistant can read this directory, choose the right endpoint, then call it through BRIJ Wallet's `brij_pay` MCP tool.
+
+Raw GitHub fallback:
+
+```text
+https://raw.githubusercontent.com/brij-digital/x402-directory/main/index.json
+```
 
 ## Rules
 

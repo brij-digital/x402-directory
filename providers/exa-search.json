@@ -15,5 +15,5 @@
     "http_base_url": "https://api.exa.ai",
     "currency": "USDC"
   },
-  "openapi_url": "./openapi/exa-search.openapi.json"
+  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/exa-search.openapi.json"
 }
