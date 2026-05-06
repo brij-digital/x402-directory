@@ -1,19 +1,20 @@
 {
   "id": "messari-news",
   "name": "Messari News API",
-  "description": "Crypto news API.",
+  "description": "Crypto news feed API.",
+  "use_when": "Use when the user asks for crypto news, market headlines, or recent ecosystem updates.",
   "category": "news",
   "tags": [
     "messari",
     "news",
     "crypto",
-    "research",
-    "curated"
+    "research"
   ],
   "payment_mode": "whitelisted",
   "x402": {
     "http_base_url": "https://api.messari.io",
     "currency": "USDC"
   },
+  "how_to_call": "Read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call BRIJ MCP tool brij_pay.",
   "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/messari-news.openapi.json"
 }

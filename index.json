@@ -1,9 +1,39 @@
 {
+  "name": "BRIJ x402 Directory",
+  "version": "2026-05-06",
+  "purpose": "A small public directory of x402 APIs that an AI assistant can discover, inspect, and call through a connected BRIJ wallet.",
+  "important": [
+    "This directory is only for discovery. It does not execute requests and does not hold secrets.",
+    "Use each provider's openapi_url to understand paths, methods, parameters, and request bodies.",
+    "When ready to call a paid endpoint, use the BRIJ MCP tool named brij_pay.",
+    "Do not ask the user for wallet keys, payment headers, or private keys. BRIJ handles payment."
+  ],
+  "agent_instructions": {
+    "recommended_flow": [
+      "Pick a provider whose use_when field matches the user's task.",
+      "Open provider_url for provider-specific metadata.",
+      "Open openapi_url to inspect available endpoints.",
+      "Build the target x402 URL from x402_base_url plus the OpenAPI path.",
+      "Call brij_pay with url, method, headers, and optional body.",
+      "Return the provider response to the user.",
+      "If payment fails, report the exact BRIJ or provider error."
+    ],
+    "payment_tool": {
+      "name": "brij_pay",
+      "arguments": {
+        "url": "Full paid x402 URL to call.",
+        "method": "HTTP method. Defaults to GET.",
+        "headers": "Optional target request headers.",
+        "body": "Optional request body. For JSON payloads, pass a JSON string."
+      }
+    }
+  },
   "providers": [
     {
       "id": "agentmail",
       "name": "AgentMail x402 API",
-      "description": "Email inbox and messaging API.",
+      "description": "Email inbox and messaging API for creating inboxes, listing messages, sending email, replying, and fetching attachments.",
+      "use_when": "Use when the user wants an AI assistant to work with email inboxes or messages.",
       "category": "communication",
       "tags": [
         "email",
@@ -12,38 +42,55 @@
         "communication"
       ],
       "payment_mode": "whitelisted",
+      "currency": "USDC",
+      "x402_base_url": "https://x402.api.agentmail.to",
+      "example_paths": [
+        "/v0/inboxes",
+        "/v0/inboxes/{inbox_id}/messages",
+        "/v0/inboxes/{inbox_id}/messages/send"
+      ],
       "provider_url": "https://brij-digital.github.io/x402-directory/providers/agentmail.json",
       "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/agentmail.openapi.json"
     },
     {
       "id": "exa-search",
       "name": "Exa Search API",
-      "description": "Web search API for AI-ready results.",
+      "description": "Web search API for AI-ready search results.",
+      "use_when": "Use when the user asks to search the web, research a topic, or find high-quality web results.",
       "category": "search",
       "tags": [
         "exa",
         "search",
         "web",
-        "research",
-        "curated"
+        "research"
       ],
       "payment_mode": "whitelisted",
+      "currency": "USDC",
+      "x402_base_url": "https://api.exa.ai",
+      "example_paths": [
+        "/search"
+      ],
       "provider_url": "https://brij-digital.github.io/x402-directory/providers/exa-search.json",
       "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/exa-search.openapi.json"
     },
     {
       "id": "messari-news",
       "name": "Messari News API",
-      "description": "Crypto news API.",
+      "description": "Crypto news feed API.",
+      "use_when": "Use when the user asks for crypto news, market headlines, or recent ecosystem updates.",
       "category": "news",
       "tags": [
         "messari",
         "news",
         "crypto",
-        "research",
-        "curated"
+        "research"
       ],
       "payment_mode": "whitelisted",
+      "currency": "USDC",
+      "x402_base_url": "https://api.messari.io",
+      "example_paths": [
+        "/news/v1/news/feed"
+      ],
       "provider_url": "https://brij-digital.github.io/x402-directory/providers/messari-news.json",
       "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/messari-news.openapi.json"
     },
@@ -51,16 +98,23 @@
       "id": "nansen-wallet-intel",
       "name": "Nansen Wallet Intel API",
       "description": "Wallet and token intelligence API.",
+      "use_when": "Use when the user asks to analyze wallets, token balances, related wallets, or token intelligence.",
       "category": "analytics",
       "tags": [
         "nansen",
         "wallet",
         "token",
         "analytics",
-        "research",
-        "curated"
+        "research"
       ],
       "payment_mode": "whitelisted",
+      "currency": "USDC",
+      "x402_base_url": "https://api.nansen.ai",
+      "example_paths": [
+        "/api/v1/profiler/address/current-balance",
+        "/api/v1/profiler/address/related-wallets",
+        "/api/v1/tgm/token-information"
+      ],
       "provider_url": "https://brij-digital.github.io/x402-directory/providers/nansen-wallet-intel.json",
       "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/nansen-wallet-intel.openapi.json"
     },
@@ -68,15 +122,20 @@
       "id": "quicknode-solana-mainnet",
       "name": "QuickNode Solana Mainnet RPC API",
       "description": "Solana mainnet JSON-RPC API.",
+      "use_when": "Use when the user asks for Solana chain data such as slots, block height, balances, transactions, or RPC methods.",
       "category": "rpc",
       "tags": [
         "solana",
         "rpc",
         "quicknode",
-        "x402",
-        "curated"
+        "x402"
       ],
       "payment_mode": "whitelisted",
+      "currency": "USDC",
+      "x402_base_url": "https://x402.quicknode.com",
+      "example_paths": [
+        "/solana-mainnet"
+      ],
       "provider_url": "https://brij-digital.github.io/x402-directory/providers/quicknode-solana-mainnet.json",
       "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/quicknode-solana-mainnet.openapi.json"
     }

@@ -2,19 +2,20 @@
   "id": "nansen-wallet-intel",
   "name": "Nansen Wallet Intel API",
   "description": "Wallet and token intelligence API.",
+  "use_when": "Use when the user asks to analyze wallets, token balances, related wallets, or token intelligence.",
   "category": "analytics",
   "tags": [
     "nansen",
     "wallet",
     "token",
     "analytics",
-    "research",
-    "curated"
+    "research"
   ],
   "payment_mode": "whitelisted",
   "x402": {
     "http_base_url": "https://api.nansen.ai",
     "currency": "USDC"
   },
+  "how_to_call": "Read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call BRIJ MCP tool brij_pay.",
   "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/nansen-wallet-intel.openapi.json"
 }
