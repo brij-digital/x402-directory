@@ -1,0 +1,126 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Exa Search API",
+    "version": "1.0.0",
+    "summary": "Provider-owned search API contract.",
+    "description": "Web search API for AI-ready results."
+  },
+  "servers": [
+    {
+      "url": "https://api.exa.ai",
+      "description": "Exa HTTP base URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "search",
+      "description": "Web search and content retrieval"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "post": {
+        "operationId": "search",
+        "summary": "Search the web",
+        "description": "Execute a search query against Exa.",
+        "tags": [
+          "search"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              },
+              "examples": {
+                "startup_research": {
+                  "summary": "Search for AI agent infrastructure startups",
+                  "value": {
+                    "query": "latest AI agent infrastructure startups"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Natural-language search query"
+          },
+          "text": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include page text in the results"
+          },
+          "numResults": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 25,
+            "default": 10,
+            "description": "Maximum number of results to return"
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publishedDate": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchResponse": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchResult"
+            }
+          }
+        }
+      }
+    }
+  }
+}

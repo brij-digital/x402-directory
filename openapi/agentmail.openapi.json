@@ -1,0 +1,389 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AgentMail x402 API",
+    "version": "1.0.0",
+    "summary": "Provider-owned email API contract.",
+    "description": "Email inbox and messaging API."
+  },
+  "servers": [
+    {
+      "url": "https://api.agentmail.to",
+      "description": "Standard AgentMail HTTP base URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "inboxes",
+      "description": "Inbox lifecycle operations"
+    },
+    {
+      "name": "messages",
+      "description": "Message send, list, reply, and attachment operations"
+    }
+  ],
+  "paths": {
+    "/v0/inboxes": {
+      "post": {
+        "operationId": "createInbox",
+        "summary": "Create inbox",
+        "description": "Create a new AgentMail inbox.",
+        "tags": [
+          "inboxes"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inbox created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inbox"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        }
+      }
+    },
+    "/v0/inboxes/{inbox_id}/messages": {
+      "get": {
+        "operationId": "listMessages",
+        "summary": "List messages",
+        "description": "List messages for one inbox.",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/InboxID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageList"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        }
+      }
+    },
+    "/v0/inboxes/{inbox_id}/messages/send": {
+      "post": {
+        "operationId": "sendMessage",
+        "summary": "Send message",
+        "description": "Send an email from one AgentMail inbox.",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/InboxID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              },
+              "examples": {
+                "plain_text": {
+                  "summary": "Send a plain-text email",
+                  "value": {
+                    "to": [
+                      "user@example.com"
+                    ],
+                    "subject": "Hello from BRIJ",
+                    "text": "Hello from an autonomous agent."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        }
+      }
+    },
+    "/v0/inboxes/{inbox_id}/messages/{message_id}/reply": {
+      "post": {
+        "operationId": "replyToMessage",
+        "summary": "Reply to message",
+        "description": "Reply to an existing message in the thread.",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/InboxID"
+          },
+          {
+            "$ref": "#/components/parameters/MessageID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyRequest"
+              },
+              "examples": {
+                "simple_reply": {
+                  "summary": "Reply to a message",
+                  "value": {
+                    "text": "Thanks for your message."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reply sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        }
+      }
+    },
+    "/v0/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id}": {
+      "get": {
+        "operationId": "getMessageAttachment",
+        "summary": "Get message attachment",
+        "description": "Fetch one attachment from a message.",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/InboxID"
+          },
+          {
+            "$ref": "#/components/parameters/MessageID"
+          },
+          {
+            "$ref": "#/components/parameters/AttachmentID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "InboxID": {
+        "name": "inbox_id",
+        "in": "path",
+        "required": true,
+        "example": "agent@example.agentmail.to",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Inbox id or email address returned by AgentMail"
+      },
+      "MessageID": {
+        "name": "message_id",
+        "in": "path",
+        "required": true,
+        "example": "<abc123@agentmail.to>",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Message id"
+      },
+      "AttachmentID": {
+        "name": "attachment_id",
+        "in": "path",
+        "required": true,
+        "example": "att_123",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Attachment id"
+      }
+    },
+    "schemas": {
+      "Inbox": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "MessageList": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          }
+        }
+      },
+      "Attachment": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          }
+        }
+      },
+      "SendMessageRequest": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "to",
+          "subject",
+          "text"
+        ],
+        "properties": {
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "cc": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "bcc": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "subject": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "html": {
+            "type": "string"
+          }
+        }
+      },
+      "ReplyRequest": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "html": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "messari-news",
+  "name": "Messari News API",
+  "description": "Crypto news API.",
+  "category": "news",
+  "tags": [
+    "messari",
+    "news",
+    "crypto",
+    "research",
+    "curated"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://api.messari.io",
+    "currency": "USDC"
+  },
+  "openapi_url": "./openapi/messari-news.openapi.json"
+}

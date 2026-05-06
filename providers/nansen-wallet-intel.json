@@ -1,0 +1,20 @@
+{
+  "id": "nansen-wallet-intel",
+  "name": "Nansen Wallet Intel API",
+  "description": "Wallet and token intelligence API.",
+  "category": "analytics",
+  "tags": [
+    "nansen",
+    "wallet",
+    "token",
+    "analytics",
+    "research",
+    "curated"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://api.nansen.ai",
+    "currency": "USDC"
+  },
+  "openapi_url": "./openapi/nansen-wallet-intel.openapi.json"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "quicknode-solana-mainnet",
+  "name": "QuickNode Solana Mainnet RPC API",
+  "description": "Solana mainnet JSON-RPC API.",
+  "category": "rpc",
+  "tags": [
+    "solana",
+    "rpc",
+    "quicknode",
+    "x402",
+    "curated"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://x402.quicknode.com",
+    "currency": "USDC"
+  },
+  "openapi_url": "./openapi/quicknode-solana-mainnet.openapi.json"
+}

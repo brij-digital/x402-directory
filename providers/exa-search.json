@@ -1,0 +1,19 @@
+{
+  "id": "exa-search",
+  "name": "Exa Search API",
+  "description": "Web search API for AI-ready results.",
+  "category": "search",
+  "tags": [
+    "exa",
+    "search",
+    "web",
+    "research",
+    "curated"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://api.exa.ai",
+    "currency": "USDC"
+  },
+  "openapi_url": "./openapi/exa-search.openapi.json"
+}

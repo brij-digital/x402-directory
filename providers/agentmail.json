@@ -1,0 +1,18 @@
+{
+  "id": "agentmail",
+  "name": "AgentMail x402 API",
+  "description": "Email inbox and messaging API.",
+  "category": "communication",
+  "tags": [
+    "email",
+    "inbox",
+    "messaging",
+    "communication"
+  ],
+  "payment_mode": "whitelisted",
+  "x402": {
+    "http_base_url": "https://x402.api.agentmail.to",
+    "currency": "USDC"
+  },
+  "openapi_url": "./openapi/agentmail.openapi.json"
+}

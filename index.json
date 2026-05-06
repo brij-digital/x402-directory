@@ -1,0 +1,84 @@
+{
+  "providers": [
+    {
+      "id": "agentmail",
+      "name": "AgentMail x402 API",
+      "description": "Email inbox and messaging API.",
+      "category": "communication",
+      "tags": [
+        "email",
+        "inbox",
+        "messaging",
+        "communication"
+      ],
+      "payment_mode": "whitelisted",
+      "provider_url": "./providers/agentmail.json",
+      "openapi_url": "./openapi/agentmail.openapi.json"
+    },
+    {
+      "id": "exa-search",
+      "name": "Exa Search API",
+      "description": "Web search API for AI-ready results.",
+      "category": "search",
+      "tags": [
+        "exa",
+        "search",
+        "web",
+        "research",
+        "curated"
+      ],
+      "payment_mode": "whitelisted",
+      "provider_url": "./providers/exa-search.json",
+      "openapi_url": "./openapi/exa-search.openapi.json"
+    },
+    {
+      "id": "messari-news",
+      "name": "Messari News API",
+      "description": "Crypto news API.",
+      "category": "news",
+      "tags": [
+        "messari",
+        "news",
+        "crypto",
+        "research",
+        "curated"
+      ],
+      "payment_mode": "whitelisted",
+      "provider_url": "./providers/messari-news.json",
+      "openapi_url": "./openapi/messari-news.openapi.json"
+    },
+    {
+      "id": "nansen-wallet-intel",
+      "name": "Nansen Wallet Intel API",
+      "description": "Wallet and token intelligence API.",
+      "category": "analytics",
+      "tags": [
+        "nansen",
+        "wallet",
+        "token",
+        "analytics",
+        "research",
+        "curated"
+      ],
+      "payment_mode": "whitelisted",
+      "provider_url": "./providers/nansen-wallet-intel.json",
+      "openapi_url": "./openapi/nansen-wallet-intel.openapi.json"
+    },
+    {
+      "id": "quicknode-solana-mainnet",
+      "name": "QuickNode Solana Mainnet RPC API",
+      "description": "Solana mainnet JSON-RPC API.",
+      "category": "rpc",
+      "tags": [
+        "solana",
+        "rpc",
+        "quicknode",
+        "x402",
+        "curated"
+      ],
+      "payment_mode": "whitelisted",
+      "provider_url": "./providers/quicknode-solana-mainnet.json",
+      "openapi_url": "./openapi/quicknode-solana-mainnet.openapi.json"
+    }
+  ]
+}
