@@ -1051,6 +1051,7 @@
       },
       "PassengerInput": {
         "type": "object",
+        "description": "Passenger details. Field constraints mirror Duffel's /air/orders contract — values that Duffel would reject (e.g. gender other than 'm'/'f') are rejected by this API before settling x402, so funds stay in the agent's wallet on validation failure.",
         "required": [
           "given_name",
           "family_name",
@@ -1062,29 +1063,53 @@
         ],
         "properties": {
           "given_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Given (first) name as on the travel document.",
+            "example": "Antoine"
           },
           "family_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Family (last) name as on the travel document.",
+            "example": "Herzog"
           },
           "born_on": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "description": "Date of birth in ISO 8601 (YYYY-MM-DD).",
+            "example": "1990-04-12"
           },
           "title": {
             "type": "string",
+            "description": "Honorific. Lowercase, exactly one of the allowed values.",
+            "enum": [
+              "mr",
+              "mrs",
+              "ms",
+              "miss",
+              "dr"
+            ],
             "example": "mr"
           },
           "gender": {
             "type": "string",
+            "description": "Biological sex as recorded on the travel document. Lowercase, exactly 'm' or 'f' (Duffel does not accept other values).",
+            "enum": [
+              "m",
+              "f"
+            ],
             "example": "m"
           },
           "email": {
             "type": "string",
-            "format": "email"
+            "format": "email",
+            "description": "Contact email. Receives booking-in-progress and booking-confirmed notifications.",
+            "example": "passenger@example.com"
           },
           "phone_number": {
-            "type": "string"
+            "type": "string",
+            "description": "Phone number in E.164 format (leading '+', country code, no spaces or punctuation).",
+            "pattern": "^\\+[1-9]\\d{6,14}$",
+            "example": "+447400123456"
           }
         }
       },

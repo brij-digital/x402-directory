@@ -1,11 +1,11 @@
 {
   "name": "BRIJ x402 Directory",
-  "version": "2026-05-06",
+  "version": "2026-05-08",
   "purpose": "A small public directory of x402 APIs that an AI assistant can discover, inspect, and call through a connected BRIJ wallet.",
   "important": [
     "This directory is only for discovery. It does not execute requests and does not hold secrets.",
     "Use each provider's openapi_url to understand paths, methods, parameters, and request bodies.",
-    "When ready to call a paid endpoint, use the BRIJ MCP tool named brij_pay.",
+    "When ready to call a paid endpoint, use the BRIJ MCP tool named call_paid_api_endpoint.",
     "Do not ask the user for wallet keys, payment headers, or private keys. BRIJ handles payment."
   ],
   "agent_instructions": {
@@ -14,18 +14,18 @@
       "Open provider_url for provider-specific metadata.",
       "Open openapi_url to inspect available endpoints.",
       "Build the target x402 URL from x402_base_url plus the OpenAPI path.",
-      "Before calling brij_pay, inspect the OpenAPI operation and include every required query parameter, path parameter, header, and request body field.",
-      "Call brij_pay with url, method, headers, and optional body.",
+      "Before calling call_paid_api_endpoint, inspect the OpenAPI operation and include every required query parameter, path parameter, header, and request body field.",
+      "Call call_paid_api_endpoint with target_url, method, headers, and optional body.",
       "Return the provider response to the user.",
       "If payment fails, report the exact BRIJ or provider error."
     ],
     "payment_tool": {
-      "name": "brij_pay",
+      "name": "call_paid_api_endpoint",
       "arguments": {
-        "url": "Full paid x402 URL to call.",
+        "target_url": "Full paid x402 URL to call.",
         "method": "HTTP method. Defaults to GET.",
         "headers": "Optional target request headers.",
-        "body": "Optional request body. For JSON payloads, pass a JSON string."
+        "body": "Optional request body. JSON objects are accepted directly."
       }
     }
   },

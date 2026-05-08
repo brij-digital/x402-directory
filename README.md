@@ -27,7 +27,7 @@ https://brij-digital.github.io/x402-directory/index.json
 
 Then open a provider file and its OpenAPI JSON. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
 
-An AI assistant can read this directory, choose the right endpoint, then call it through BRIJ Wallet's `brij_pay` MCP tool.
+An AI assistant can read this directory, choose the right endpoint, then call it through BRIJ Wallet's `call_paid_api_endpoint` MCP tool using `target_url`, `method`, `headers`, and optional `body`.
 
 Raw GitHub fallback:
 
