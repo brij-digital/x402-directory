@@ -4,7 +4,7 @@ Static JSON directory of x402 services.
 
 This repo is only for discovery. It does not proxy requests, hold keys, or run a backend.
 
-BRIJ Wallet handles payment through its MCP/payment runtime. This directory helps humans and AI assistants find x402 endpoints and OpenAPI specs.
+This directory helps humans and AI assistants find paid x402 endpoints and OpenAPI specs.
 
 ## Files
 
@@ -27,7 +27,8 @@ https://brij-digital.github.io/x402-directory/index.json
 
 Then open a provider file and its OpenAPI JSON. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
 
-An AI assistant can read this directory, choose the right endpoint, then call it through BRIJ Wallet's `call_paid_api_endpoint` MCP tool using `target_url`, `method`, `headers`, and optional `body`.
+Execution is client-specific:
+- With BRIJ Wallet MCP, follow the MCP tool instructions and call `call_paid_api_endpoint`.
 
 Raw GitHub fallback:
 

@@ -17,6 +17,50 @@
     "currency": "USDC"
   },
   "source_openapi_url": "https://travel.brij.fi/openapi.json",
-  "how_to_call": "Read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call BRIJ MCP tool call_paid_api_endpoint.",
+  "how_to_call": "If you are using BRIJ Wallet MCP, read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
+  "agent_guidance": {
+    "flow": "search -> create_intent -> book",
+    "rules": [
+      "Never invent offer_ids, intent_ids, prices, booking statuses, or support codes.",
+      "Only show data returned by the latest API response.",
+      "After each API call, parse the actual response before telling the user what happened.",
+      "Do not say a flight is booked until POST /air/intents/{intent_id}/book confirms success.",
+      "Do not restart search unless the current offer expired or the API says it is invalid."
+    ],
+    "steps": [
+      {
+        "name": "search",
+        "endpoint": "POST /air/search",
+        "after_success": [
+          "Show 3-5 best real offers from the response.",
+          "For each offer, show price, airline, departure time, arrival time, duration, and offer_id.",
+          "Tell the user offers expire quickly.",
+          "Ask the user to choose one offer_id before creating an intent."
+        ]
+      },
+      {
+        "name": "create_intent",
+        "endpoint": "POST /air/intents",
+        "after_success": [
+          "Show intent_id, selected flight summary, escrow amount, expiry, and support code if present.",
+          "Say clearly that the flight is not booked yet.",
+          "Ask the user to confirm before calling the book endpoint."
+        ]
+      },
+      {
+        "name": "book",
+        "endpoint": "POST /air/intents/{intent_id}/book",
+        "after_success": [
+          "Say booked only if the API confirms booking or order success.",
+          "Show order_id, booking status, support code, and next steps if present."
+        ],
+        "after_error": [
+          "Show the exact provider error.",
+          "If passenger data is invalid, fix only the invalid fields and retry only when safe.",
+          "If offer or intent expired, explain that a new search is required."
+        ]
+      }
+    ]
+  },
   "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/travel.openapi.json"
 }

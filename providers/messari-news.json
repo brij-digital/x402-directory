@@ -15,6 +15,6 @@
     "http_base_url": "https://api.messari.io",
     "currency": "USDC"
   },
-  "how_to_call": "Read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call BRIJ MCP tool call_paid_api_endpoint.",
+  "how_to_call": "If you are using BRIJ Wallet MCP, read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
   "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/messari-news.openapi.json"
 }

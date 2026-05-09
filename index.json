@@ -1,31 +1,34 @@
 {
   "name": "BRIJ x402 Directory",
   "version": "2026-05-08",
-  "purpose": "A small public directory of x402 APIs that an AI assistant can discover, inspect, and call through a connected BRIJ wallet.",
+  "purpose": "A small public directory of paid x402 APIs that an AI assistant can discover and inspect.",
   "important": [
     "This directory is only for discovery. It does not execute requests and does not hold secrets.",
     "Use each provider's openapi_url to understand paths, methods, parameters, and request bodies.",
-    "When ready to call a paid endpoint, use the BRIJ MCP tool named call_paid_api_endpoint.",
-    "Do not ask the user for wallet keys, payment headers, or private keys. BRIJ handles payment."
+    "If you are connected through BRIJ Wallet MCP, follow that MCP server's tool instructions to execute paid calls."
   ],
   "agent_instructions": {
     "recommended_flow": [
       "Pick a provider whose use_when field matches the user's task.",
       "Open provider_url for provider-specific metadata.",
       "Open openapi_url to inspect available endpoints.",
+      "If provider_url includes agent_guidance, follow it for multi-step flows and user-facing output.",
       "Build the target x402 URL from x402_base_url plus the OpenAPI path.",
-      "Before calling call_paid_api_endpoint, inspect the OpenAPI operation and include every required query parameter, path parameter, header, and request body field.",
-      "Call call_paid_api_endpoint with target_url, method, headers, and optional body.",
-      "Return the provider response to the user.",
-      "If payment fails, report the exact BRIJ or provider error."
+      "Before execution, inspect the OpenAPI operation and include every required query parameter, path parameter, header, and request body field.",
+      "If using BRIJ Wallet MCP, execute the target URL with call_paid_api_endpoint.",
+      "Return only real provider response data to the user.",
+      "If payment fails, report the exact payment or provider error."
     ],
-    "payment_tool": {
-      "name": "call_paid_api_endpoint",
-      "arguments": {
-        "target_url": "Full paid x402 URL to call.",
-        "method": "HTTP method. Defaults to GET.",
-        "headers": "Optional target request headers.",
-        "body": "Optional request body. JSON objects are accepted directly."
+    "client_usage": {
+      "brij_wallet_mcp": {
+        "execution_tool": "call_paid_api_endpoint",
+        "rule": "Use the MCP tool instructions. Pass the full provider endpoint URL as target_url.",
+        "arguments": {
+          "target_url": "Full paid x402 URL to call.",
+          "method": "HTTP method. Defaults to GET.",
+          "headers": "Optional target request headers.",
+          "body": "Optional request body. JSON objects are accepted directly."
+        }
       }
     }
   },
