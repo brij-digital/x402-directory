@@ -16,5 +16,5 @@
     "currency": "USDC"
   },
   "how_to_call": "If you are using BRIJ Wallet MCP, read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
-  "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/agentmail.openapi.json"
+  "openapi_url": "https://x402catalog.com/openapi/agentmail.openapi.json"
 }

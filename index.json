@@ -4,15 +4,16 @@
   "purpose": "A small public directory of paid x402 APIs that an AI assistant can discover and inspect.",
   "important": [
     "This directory is only for discovery. It does not execute requests and does not hold secrets.",
-    "Use each provider's openapi_url to understand paths, methods, parameters, and request bodies.",
+    "Start with this index. Open provider_url and openapi_url only for the provider selected for the user's task.",
+    "Use each selected provider's openapi_url to understand paths, methods, parameters, and request bodies.",
     "If you are connected through BRIJ Wallet MCP, follow that MCP server's tool instructions to execute paid calls."
   ],
   "agent_instructions": {
     "recommended_flow": [
       "Pick a provider whose use_when field matches the user's task.",
-      "Open provider_url for provider-specific metadata.",
-      "Open openapi_url to inspect available endpoints.",
-      "If provider_url includes agent_guidance, follow it for multi-step flows and user-facing output.",
+      "Open provider_url only for the selected provider if you need provider-specific metadata or multi-step guidance.",
+      "Open openapi_url only for the selected provider to inspect exact endpoints.",
+      "If the selected provider_url includes agent_guidance, follow it for multi-step flows and user-facing output.",
       "Build the target x402 URL from x402_base_url plus the OpenAPI path.",
       "Before execution, inspect the OpenAPI operation and include every required query parameter, path parameter, header, and request body field.",
       "If using BRIJ Wallet MCP, execute the target URL with call_paid_api_endpoint.",
@@ -53,8 +54,8 @@
         "/v0/inboxes/{inbox_id}/messages",
         "/v0/inboxes/{inbox_id}/messages/send"
       ],
-      "provider_url": "https://brij-digital.github.io/x402-directory/providers/agentmail.json",
-      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/agentmail.openapi.json"
+      "provider_url": "https://x402catalog.com/providers/agentmail.json",
+      "openapi_url": "https://x402catalog.com/openapi/agentmail.openapi.json"
     },
     {
       "id": "fov",
@@ -77,8 +78,8 @@
         "/email-finder",
         "/email-verifier"
       ],
-      "provider_url": "https://brij-digital.github.io/x402-directory/providers/fov.json",
-      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/fov.openapi.json"
+      "provider_url": "https://x402catalog.com/providers/fov.json",
+      "openapi_url": "https://x402catalog.com/openapi/fov.openapi.json"
     },
     {
       "id": "travel",
@@ -103,8 +104,8 @@
         "/air/intents/{intent_id}/refund-requests",
         "/air/orders/{order_id}"
       ],
-      "provider_url": "https://brij-digital.github.io/x402-directory/providers/travel.json",
-      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/travel.openapi.json"
+      "provider_url": "https://x402catalog.com/providers/travel.json",
+      "openapi_url": "https://x402catalog.com/openapi/travel.openapi.json"
     },
     {
       "id": "messari-news",
@@ -124,8 +125,8 @@
       "example_paths": [
         "/news/v1/news/feed"
       ],
-      "provider_url": "https://brij-digital.github.io/x402-directory/providers/messari-news.json",
-      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/messari-news.openapi.json"
+      "provider_url": "https://x402catalog.com/providers/messari-news.json",
+      "openapi_url": "https://x402catalog.com/openapi/messari-news.openapi.json"
     },
     {
       "id": "nansen-wallet-intel",
@@ -148,8 +149,8 @@
         "/api/v1/profiler/address/related-wallets",
         "/api/v1/tgm/token-information"
       ],
-      "provider_url": "https://brij-digital.github.io/x402-directory/providers/nansen-wallet-intel.json",
-      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/nansen-wallet-intel.openapi.json"
+      "provider_url": "https://x402catalog.com/providers/nansen-wallet-intel.json",
+      "openapi_url": "https://x402catalog.com/openapi/nansen-wallet-intel.openapi.json"
     },
     {
       "id": "quicknode-solana-mainnet",
@@ -169,8 +170,8 @@
       "example_paths": [
         "/solana-mainnet"
       ],
-      "provider_url": "https://brij-digital.github.io/x402-directory/providers/quicknode-solana-mainnet.json",
-      "openapi_url": "https://brij-digital.github.io/x402-directory/openapi/quicknode-solana-mainnet.openapi.json"
+      "provider_url": "https://x402catalog.com/providers/quicknode-solana-mainnet.json",
+      "openapi_url": "https://x402catalog.com/openapi/quicknode-solana-mainnet.openapi.json"
     }
   ]
 }

@@ -11,6 +11,7 @@ This directory helps humans and AI assistants find paid x402 endpoints and OpenA
 ```text
 index.html
 index.json
+llms.txt
 providers/
 openapi/
 ```
@@ -20,12 +21,14 @@ openapi/
 Start with:
 
 ```text
-https://brij-digital.github.io/x402-directory/index.json
+https://x402catalog.com/index.json
 ```
 
 `index.json` includes purpose, agent instructions, provider summaries, use cases, x402 base URLs, and absolute links. An AI assistant should be able to start there without guessing what this repo is for.
 
-Then open a provider file and its OpenAPI JSON. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
+Then open only the selected provider file and only its OpenAPI JSON. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
+
+`llms.txt` is a short Markdown guide for browsing AI agents. It points agents back to `index.json`; it is not the source of truth.
 
 Execution is client-specific:
 - With BRIJ Wallet MCP, follow the MCP tool instructions and call `call_paid_api_endpoint`.
