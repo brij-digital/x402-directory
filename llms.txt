@@ -4,19 +4,25 @@ x402 Catalog is a small public directory of paid x402 APIs for AI agents.
 
 Use this site to discover APIs only. This site does not execute requests, hold wallet secrets, or process payments.
 
-## Start Here
+## Providers
 
-- Directory index: https://x402catalog.com/index.json
+Open exactly one provider file that matches the user's task. Each provider file contains metadata, optional agent guidance, x402 base URL, and a full OpenAPI object.
+
+- Travel flights and booking: https://x402catalog.com/providers/travel.json
+- Email finder and verifier: https://x402catalog.com/providers/fov.json
+- Agent email inboxes and messages: https://x402catalog.com/providers/agentmail.json
+- Crypto news: https://x402catalog.com/providers/messari-news.json
+- Wallet and token intelligence: https://x402catalog.com/providers/nansen-wallet-intel.json
+- Solana JSON-RPC: https://x402catalog.com/providers/quicknode-solana-mainnet.json
 
 ## How To Use With BRIJ Wallet MCP
 
-1. Read `https://x402catalog.com/index.json`.
-2. Pick one provider whose `use_when` matches the user's task.
-3. Open only that provider's `provider_url`.
-4. Read metadata, `agent_guidance`, and the full `openapi` object from that one provider file.
-5. Build the target URL from `x402_base_url` plus the OpenAPI path.
-6. Call the BRIJ Wallet MCP tool `call_paid_api_endpoint`.
-7. After each paid API call, parse the actual provider response before speaking to the user.
+1. Pick one provider from the list above.
+2. Open that provider JSON file.
+3. Read metadata, `agent_guidance`, and the full `openapi` object.
+4. Build the target URL from `x402.http_base_url` plus the OpenAPI path.
+5. Call the BRIJ Wallet MCP tool `call_paid_api_endpoint`.
+6. After each paid API call, parse the actual provider response before speaking to the user.
 
 ## Important Rules For Agents
 
@@ -24,9 +30,3 @@ Use this site to discover APIs only. This site does not execute requests, hold w
 - For multi-step APIs, keep IDs returned by earlier responses and reuse them in later calls.
 - If an API returns a validation error, show the exact provider error and fix only the missing or invalid fields.
 - If payment fails, report the exact payment error.
-
-## Useful Providers
-
-- Travel API: https://x402catalog.com/providers/travel.json
-- FOV Email API: https://x402catalog.com/providers/fov.json
-- AgentMail API: https://x402catalog.com/providers/agentmail.json

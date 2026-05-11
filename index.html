@@ -109,21 +109,22 @@
   <body>
     <main>
       <h1>x402 Catalog</h1>
-      <p class="lede">A tiny public directory of paid x402 APIs for AI agents. Pick one provider, open one provider file, then call it through your x402 wallet runtime.</p>
+      <p class="lede">A tiny public directory of paid x402 APIs for AI agents. Pick one provider file, read its OpenAPI, then call it through your x402 wallet runtime.</p>
 
       <div class="links">
-        <a href="./index.json">Open directory JSON</a>
-        <a class="secondary" href="./llms.txt">Open llms.txt</a>
+        <a href="./llms.txt">Open llms.txt</a>
+        <a class="secondary" href="./providers/travel.json">Travel API</a>
+        <a class="secondary" href="./providers/fov.json">FOV Email API</a>
       </div>
 
       <h2>For AI agents</h2>
-      <p>Start with the index, then open only the provider file you choose. Each provider file includes metadata, guidance, and OpenAPI.</p>
-      <code>https://x402catalog.com/index.json</code>
+      <p>Start with <code>llms.txt</code>, choose one provider, then open only that provider JSON. Each provider file includes metadata, guidance, and OpenAPI.</p>
+      <code>https://x402catalog.com/llms.txt</code>
 
       <div class="grid">
         <section class="card">
           <strong>1. Pick a provider</strong>
-          <p>Use <code>use_when</code>, category, tags, and example paths from <code>index.json</code>.</p>
+          <p>Use the short provider list in <code>llms.txt</code>.</p>
         </section>
         <section class="card">
           <strong>2. Open one provider file</strong>
