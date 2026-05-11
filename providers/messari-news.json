@@ -15,6 +15,66 @@
     "http_base_url": "https://api.messari.io",
     "currency": "USDC"
   },
-  "how_to_call": "If you are using BRIJ Wallet MCP, read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
-  "openapi_url": "https://x402catalog.com/openapi/messari-news.openapi.json"
+  "how_to_call": "If you are using BRIJ Wallet MCP, read the openapi object in this provider file, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
+  "openapi": {
+    "openapi": "3.1.0",
+    "info": {
+      "title": "Messari News API",
+      "version": "1.0.0",
+      "summary": "Provider-owned news API contract.",
+      "description": "Crypto news API."
+    },
+    "servers": [
+      {
+        "url": "https://api.messari.io",
+        "description": "Messari HTTP base URL"
+      }
+    ],
+    "tags": [
+      {
+        "name": "news",
+        "description": "Crypto news retrieval"
+      }
+    ],
+    "paths": {
+      "/news/v1/news/feed": {
+        "get": {
+          "operationId": "getNewsFeed",
+          "summary": "Get news feed",
+          "description": "Fetch the Messari crypto news feed, optionally filtered by asset ids.",
+          "tags": [
+            "news"
+          ],
+          "parameters": [
+            {
+              "name": "assetIds",
+              "in": "query",
+              "required": false,
+              "example": "bitcoin,ethereum",
+              "description": "Comma-separated asset ids, for example bitcoin,ethereum.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "News feed",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "402": {
+              "description": "Payment required"
+            }
+          }
+        }
+      }
+    }
+  }
 }

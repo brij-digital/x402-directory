@@ -13,7 +13,6 @@ index.html
 index.json
 llms.txt
 providers/
-openapi/
 ```
 
 ## How To Use
@@ -26,7 +25,7 @@ https://x402catalog.com/index.json
 
 `index.json` includes purpose, agent instructions, provider summaries, use cases, x402 base URLs, and absolute links. An AI assistant should be able to start there without guessing what this repo is for.
 
-Then open only the selected provider file and only its OpenAPI JSON. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
+Then open only the selected provider file. Each provider file contains metadata, optional agent guidance, and the full OpenAPI object. All URLs in `index.json` are absolute so an AI assistant does not need to guess paths.
 
 `llms.txt` is a short Markdown guide for browsing AI agents. It points agents back to `index.json`; it is not the source of truth.
 
@@ -45,4 +44,4 @@ https://raw.githubusercontent.com/brij-digital/x402-directory/main/index.json
 - No secrets.
 - No backend assumptions.
 - Keep provider metadata short.
-- Keep OpenAPI files cached and reviewable.
+- Keep OpenAPI embedded in the selected provider file.

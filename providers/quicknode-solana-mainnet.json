@@ -15,6 +15,119 @@
     "http_base_url": "https://x402.quicknode.com",
     "currency": "USDC"
   },
-  "how_to_call": "If you are using BRIJ Wallet MCP, read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
-  "openapi_url": "https://x402catalog.com/openapi/quicknode-solana-mainnet.openapi.json"
+  "how_to_call": "If you are using BRIJ Wallet MCP, read the openapi object in this provider file, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
+  "openapi": {
+    "openapi": "3.1.0",
+    "info": {
+      "title": "QuickNode Solana Mainnet RPC API",
+      "version": "1.0.0",
+      "summary": "Provider-owned paid JSON-RPC contract.",
+      "description": "Solana mainnet JSON-RPC API."
+    },
+    "servers": [
+      {
+        "url": "https://x402.quicknode.com",
+        "description": "QuickNode x402 HTTP base URL"
+      }
+    ],
+    "tags": [
+      {
+        "name": "rpc",
+        "description": "Solana JSON-RPC operations"
+      }
+    ],
+    "paths": {
+      "/solana-mainnet": {
+        "post": {
+          "operationId": "callSolanaMainnetRpc",
+          "summary": "Call Solana JSON-RPC",
+          "description": "Submit a paid JSON-RPC request to Solana mainnet via QuickNode.",
+          "tags": [
+            "rpc"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonRpcRequest"
+                },
+                "examples": {
+                  "get_slot": {
+                    "summary": "Get current Solana slot",
+                    "value": {
+                      "method": "getSlot"
+                    }
+                  },
+                  "get_account_info": {
+                    "summary": "Get system program account info",
+                    "value": {
+                      "method": "getAccountInfo",
+                      "params": [
+                        "11111111111111111111111111111111",
+                        {
+                          "encoding": "base64"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "JSON-RPC response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "402": {
+              "description": "Payment required"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "JsonRpcRequest": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "jsonrpc": {
+              "type": "string",
+              "default": "2.0"
+            },
+            "id": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "default": 1
+            },
+            "method": {
+              "type": "string"
+            },
+            "params": {
+              "type": "array",
+              "default": []
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -12,8 +12,8 @@ Use this site to discover APIs only. This site does not execute requests, hold w
 
 1. Read `https://x402catalog.com/index.json`.
 2. Pick one provider whose `use_when` matches the user's task.
-3. Open that provider's `provider_url` only if you need provider-specific guidance.
-4. Open that provider's `openapi_url` only when you need exact paths, required parameters, or request body fields.
+3. Open only that provider's `provider_url`.
+4. Read metadata, `agent_guidance`, and the full `openapi` object from that one provider file.
 5. Build the target URL from `x402_base_url` plus the OpenAPI path.
 6. Call the BRIJ Wallet MCP tool `call_paid_api_endpoint`.
 7. After each paid API call, parse the actual provider response before speaking to the user.

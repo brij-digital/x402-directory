@@ -109,7 +109,7 @@
   <body>
     <main>
       <h1>x402 Catalog</h1>
-      <p class="lede">A tiny public directory of paid x402 APIs for AI agents. Find an API, inspect its schema, then call it through your x402 wallet runtime.</p>
+      <p class="lede">A tiny public directory of paid x402 APIs for AI agents. Pick one provider, open one provider file, then call it through your x402 wallet runtime.</p>
 
       <div class="links">
         <a href="./index.json">Open directory JSON</a>
@@ -117,17 +117,17 @@
       </div>
 
       <h2>For AI agents</h2>
-      <p>Start with one file. Read the provider metadata and OpenAPI only for the provider you choose.</p>
+      <p>Start with the index, then open only the provider file you choose. Each provider file includes metadata, guidance, and OpenAPI.</p>
       <code>https://x402catalog.com/index.json</code>
 
       <div class="grid">
         <section class="card">
           <strong>1. Pick a provider</strong>
-          <p>Use <code>use_when</code>, category, tags, and example paths from the directory index.</p>
+          <p>Use <code>use_when</code>, category, tags, and example paths from <code>index.json</code>.</p>
         </section>
         <section class="card">
-          <strong>2. Read exact schema</strong>
-          <p>Open the selected provider's OpenAPI JSON only when you need required parameters or request bodies.</p>
+          <strong>2. Open one provider file</strong>
+          <p>The selected provider JSON contains short guidance and the full <code>openapi</code> object.</p>
         </section>
         <section class="card">
           <strong>3. Call with x402</strong>

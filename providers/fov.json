@@ -17,6 +17,458 @@
     "currency": "USDC"
   },
   "source_openapi_url": "https://fov.brij.fi/openapi.json",
-  "how_to_call": "If you are using BRIJ Wallet MCP, read openapi_url, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
-  "openapi_url": "https://x402catalog.com/openapi/fov.openapi.json"
+  "how_to_call": "If you are using BRIJ Wallet MCP, read the openapi object in this provider file, build the target URL from x402.http_base_url plus the OpenAPI path, then call the BRIJ MCP tool call_paid_api_endpoint.",
+  "openapi": {
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FOV — Find or Verify",
+      "version": "1.0.0",
+      "description": "Email finder and verifier API, paywalled with x402 (USDC on Solana).\n\n## Payment\n\nPaid endpoints use the [x402 protocol](https://x402.org):\n\n1. Make a request — receive `402 Payment Required` with a `PAYMENT-REQUIRED` header (base64-encoded JSON describing the amount, asset, and recipient).\n2. Sign a Solana USDC transaction per the x402 spec.\n3. Retry with the `PAYMENT-SIGNATURE` header. On success the response includes a `PAYMENT-RESPONSE` header with settlement proof.\n\nUse an x402-compatible client (e.g. the [BRIJ proxy](https://agents.brij.fi)) to handle payment automatically."
+    },
+    "servers": [
+      {
+        "url": "https://fov.brij.fi"
+      }
+    ],
+    "paths": {
+      "/email-finder": {
+        "get": {
+          "operationId": "email_finder",
+          "summary": "Find the most likely email address for a person at a company domain ($0.05). Provide domain plus first/last name or full name.",
+          "description": "Returns the most likely email address for a person at a domain.",
+          "tags": [
+            "Email"
+          ],
+          "x-payment-info": {
+            "price": {
+              "mode": "fixed",
+              "currency": "USD",
+              "amount": "0.05"
+            },
+            "protocols": [
+              {
+                "x402": {}
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "name": "domain",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "stripe.com"
+            },
+            {
+              "name": "first_name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              },
+              "example": "Patrick"
+            },
+            {
+              "name": "last_name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              },
+              "example": "Collison"
+            },
+            {
+              "name": "full_name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "PAYMENT-SIGNATURE",
+              "in": "header",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Base64-encoded signed x402 payment payload. Required after receiving a 402."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Email lookup result.",
+              "headers": {
+                "X-Cache": {
+                  "schema": {
+                    "type": "string",
+                    "enum": [
+                      "HIT",
+                      "MISS"
+                    ]
+                  }
+                },
+                "PAYMENT-RESPONSE": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Base64-encoded x402 settlement proof."
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EmailResult"
+                  }
+                }
+              }
+            },
+            "402": {
+              "$ref": "#/components/responses/PaymentRequired"
+            }
+          }
+        }
+      },
+      "/domain-search": {
+        "get": {
+          "operationId": "domain_search",
+          "summary": "List every known email address at a company domain ($0.05). Filter by department, seniority, or type.",
+          "description": "Returns the email addresses found at a domain.",
+          "tags": [
+            "Email"
+          ],
+          "x-payment-info": {
+            "price": {
+              "mode": "fixed",
+              "currency": "USD",
+              "amount": "0.05"
+            },
+            "protocols": [
+              {
+                "x402": {}
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "name": "domain",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "stripe.com"
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "default": 10,
+                "maximum": 100
+              }
+            },
+            {
+              "name": "offset",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              }
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "personal",
+                  "generic"
+                ]
+              }
+            },
+            {
+              "name": "seniority",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "department",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "PAYMENT-SIGNATURE",
+              "in": "header",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Base64-encoded signed x402 payment payload. Required after receiving a 402."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Domain email search results.",
+              "headers": {
+                "X-Cache": {
+                  "schema": {
+                    "type": "string",
+                    "enum": [
+                      "HIT",
+                      "MISS"
+                    ]
+                  }
+                },
+                "PAYMENT-RESPONSE": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Base64-encoded x402 settlement proof."
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DomainResult"
+                  }
+                }
+              }
+            },
+            "402": {
+              "$ref": "#/components/responses/PaymentRequired"
+            }
+          }
+        }
+      },
+      "/email-verifier": {
+        "get": {
+          "operationId": "email_verifier",
+          "summary": "Check whether an email address is deliverable ($0.03). Validates MX records, SMTP, disposable / role-account flags, and confidence score.",
+          "description": "Returns the deliverability status of an email address.",
+          "tags": [
+            "Email"
+          ],
+          "x-payment-info": {
+            "price": {
+              "mode": "fixed",
+              "currency": "USD",
+              "amount": "0.03"
+            },
+            "protocols": [
+              {
+                "x402": {}
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "name": "email",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "email"
+              },
+              "example": "patrick@stripe.com"
+            },
+            {
+              "name": "PAYMENT-SIGNATURE",
+              "in": "header",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Base64-encoded signed x402 payment payload. Required after receiving a 402."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Email verification result.",
+              "headers": {
+                "X-Cache": {
+                  "schema": {
+                    "type": "string",
+                    "enum": [
+                      "HIT",
+                      "MISS"
+                    ]
+                  }
+                },
+                "PAYMENT-RESPONSE": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Base64-encoded x402 settlement proof."
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/VerifierResult"
+                  }
+                }
+              }
+            },
+            "402": {
+              "$ref": "#/components/responses/PaymentRequired"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "responses": {
+        "PaymentRequired": {
+          "description": "Payment required. Retry the request with a `PAYMENT-SIGNATURE` header containing a signed x402 payment.",
+          "headers": {
+            "PAYMENT-REQUIRED": {
+              "schema": {
+                "type": "string"
+              },
+              "description": "Base64-encoded x402 PaymentRequired JSON with network, asset, amount, and recipient."
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "x402Version": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "error": {
+                    "type": "string",
+                    "example": "PAYMENT-SIGNATURE header is required"
+                  },
+                  "accepts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "scheme": {
+                          "type": "string",
+                          "example": "exact"
+                        },
+                        "network": {
+                          "type": "string",
+                          "example": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp"
+                        },
+                        "asset": {
+                          "type": "string",
+                          "example": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+                        },
+                        "amount": {
+                          "type": "string",
+                          "example": "50000",
+                          "description": "Amount in USDC atomic units (6 decimals). 50000 = $0.05."
+                        },
+                        "payTo": {
+                          "type": "string",
+                          "description": "Solana wallet address receiving the payment."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "schemas": {
+        "EmailResult": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "nullable": true,
+                  "example": "patrick@stripe.com"
+                },
+                "score": {
+                  "type": "integer",
+                  "nullable": true,
+                  "description": "Confidence score 0–100.",
+                  "example": 92
+                },
+                "domain": {
+                  "type": "string",
+                  "example": "stripe.com"
+                }
+              }
+            }
+          }
+        },
+        "DomainResult": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string",
+                  "example": "stripe.com"
+                },
+                "emails": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "example": "john@stripe.com"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "personal",
+                          "generic"
+                        ]
+                      },
+                      "confidence": {
+                        "type": "integer",
+                        "example": 87
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "VerifierResult": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "patrick@stripe.com"
+                },
+                "result": {
+                  "type": "string",
+                  "enum": [
+                    "deliverable",
+                    "undeliverable",
+                    "risky",
+                    "unknown"
+                  ]
+                },
+                "score": {
+                  "type": "integer",
+                  "nullable": true,
+                  "example": 88
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
