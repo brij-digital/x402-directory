@@ -104,37 +104,74 @@
         box-shadow: inset 0 0 0 1px var(--ink);
         color: var(--ink);
       }
+      .provider-list {
+        display: grid;
+        gap: 10px;
+        margin: 18px 0 0;
+        padding: 0;
+      }
+      .provider-list li {
+        background: rgba(255, 248, 232, 0.78);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: space-between;
+        list-style: none;
+        padding: 12px 14px;
+      }
+      .provider-list span {
+        color: var(--muted);
+      }
+      ol,
+      ul.rules {
+        max-width: 760px;
+        padding-left: 24px;
+      }
+      li {
+        margin: 8px 0;
+      }
     </style>
   </head>
   <body>
     <main>
       <h1>x402 Catalog</h1>
-      <p class="lede">A tiny public directory of paid x402 APIs for AI agents. Pick one provider file, read its OpenAPI, then call it through your x402 wallet runtime.</p>
+      <p class="lede">A small public directory of paid x402 APIs for AI agents.</p>
+      <p>Use this site to discover APIs only. This site does not execute requests, hold wallet secrets, or process payments.</p>
 
       <div class="links">
         <a href="./llms.txt">Open llms.txt</a>
-        <a class="secondary" href="./providers/travel.json">Travel API</a>
-        <a class="secondary" href="./providers/fov.json">FOV Email API</a>
       </div>
 
-      <h2>For AI agents</h2>
-      <p>Start with <code>llms.txt</code>, choose one provider, then open only that provider JSON. Each provider file includes metadata, guidance, and OpenAPI.</p>
-      <code>https://x402catalog.com/llms.txt</code>
+      <h2>Providers</h2>
+      <p>Open exactly one provider file that matches the user's task. Each provider file contains metadata, optional agent guidance, x402 base URL, and a full OpenAPI object.</p>
+      <ul class="provider-list">
+        <li><a href="./providers/travel.json">Travel flights and booking</a> <span>travel.json</span></li>
+        <li><a href="./providers/fov.json">Email finder and verifier</a> <span>fov.json</span></li>
+        <li><a href="./providers/agentmail.json">Agent email inboxes and messages</a> <span>agentmail.json</span></li>
+        <li><a href="./providers/messari-news.json">Crypto news</a> <span>messari-news.json</span></li>
+        <li><a href="./providers/nansen-wallet-intel.json">Wallet and token intelligence</a> <span>nansen-wallet-intel.json</span></li>
+        <li><a href="./providers/quicknode-solana-mainnet.json">Solana JSON-RPC</a> <span>quicknode-solana-mainnet.json</span></li>
+      </ul>
 
-      <div class="grid">
-        <section class="card">
-          <strong>1. Pick a provider</strong>
-          <p>Use the short provider list in <code>llms.txt</code>.</p>
-        </section>
-        <section class="card">
-          <strong>2. Open one provider file</strong>
-          <p>The selected provider JSON contains short guidance and the full <code>openapi</code> object.</p>
-        </section>
-        <section class="card">
-          <strong>3. Call with x402</strong>
-          <p>If using BRIJ Wallet MCP, call <code>call_paid_api_endpoint</code> with the full paid endpoint URL.</p>
-        </section>
-      </div>
+      <h2>How To Use With BRIJ Wallet MCP</h2>
+      <ol>
+        <li>Pick one provider from the list above.</li>
+        <li>Open that provider JSON file.</li>
+        <li>Read metadata, <code>agent_guidance</code>, and the full <code>openapi</code> object.</li>
+        <li>Build the target URL from <code>x402.http_base_url</code> plus the OpenAPI path.</li>
+        <li>Call the BRIJ Wallet MCP tool <code>call_paid_api_endpoint</code>.</li>
+        <li>After each paid API call, parse the actual provider response before speaking to the user.</li>
+      </ol>
+
+      <h2>Important Rules For Agents</h2>
+      <ul class="rules">
+        <li>Never invent IDs, prices, statuses, support codes, or booking confirmations.</li>
+        <li>For multi-step APIs, keep IDs returned by earlier responses and reuse them in later calls.</li>
+        <li>If an API returns a validation error, show the exact provider error and fix only the missing or invalid fields.</li>
+        <li>If payment fails, report the exact payment error.</li>
+      </ul>
     </main>
   </body>
 </html>
