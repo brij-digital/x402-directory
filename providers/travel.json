@@ -24,6 +24,7 @@
       "Never invent offer_ids, intent_ids, prices, booking statuses, or support codes.",
       "Only show data returned by the latest API response.",
       "After each API call, parse the actual response before telling the user what happened.",
+      "Search can be sponsored by BRIJ Wallet, so users may search before funding their wallet; creating intents and booking remain paid.",
       "Do not say a flight is booked until POST /air/intents/{intent_id}/book confirms success.",
       "Do not restart search unless the current offer expired or the API says it is invalid."
     ],
@@ -69,7 +70,7 @@
     "info": {
       "title": "BRIJ Flight API",
       "version": "1.0.0",
-      "description": "Production flight API for paid flight search, escrow-backed booking intents,\nand airline order status lookup.\n\n`POST /air/search`, `POST /air/intents`, `POST /air/intents/{intent_id}/book`,\nand `POST /air/intents/{intent_id}/refund-requests` are protected by x402.\nClients that do not send a valid `PAYMENT-SIGNATURE` header receive\n`402 Payment Required` with a `PAYMENT-REQUIRED` header and JSON payment\nrequirements body.\n"
+      "description": "Production flight API for paid flight search, escrow-backed booking intents,\nand airline order status lookup.\n\n`POST /air/search` accepts either a valid x402 `PAYMENT-SIGNATURE` or a\nBRIJ gateway sponsored-preview signature. `POST /air/intents`,\n`POST /air/intents/{intent_id}/book`, and\n`POST /air/intents/{intent_id}/refund-requests` are protected by x402.\nClients that do not send a valid `PAYMENT-SIGNATURE` header receive\n`402 Payment Required` with a `PAYMENT-REQUIRED` header and JSON payment\nrequirements body.\n"
     },
     "servers": [
       {
@@ -171,10 +172,13 @@
           ],
           "operationId": "searchFlights",
           "summary": "Search live flight offers.",
-          "description": "Paid x402 endpoint with dynamic pricing. Send a valid\n`PAYMENT-SIGNATURE` header to execute the search. Without payment,\nthe API returns `402 Payment Required` carrying the **current** price.\n\nBase price is 0.10 USDC. The price is multiplied (up to 50×) by the\ncurrent search load: completed searches in the last 60 seconds and\nany upstream rate-limit response in the last 5 minutes. Always read\nthe latest `PAYMENT-REQUIRED` challenge before signing - the price\nyour client saw a moment ago may already be stale.\n",
+          "description": "Flight search can be paid with x402 or sponsored by the BRIJ gateway.\n\nFor direct x402 clients, send a valid `PAYMENT-SIGNATURE` header. Without\npayment, the API returns `402 Payment Required` carrying the **current** price.\n\nFor BRIJ Wallet preview calls, the gateway may send `X-BRIJ-SPONSORED-*`\nheaders. Providers should treat that as a BRIJ-sponsored preview, not as a\nuser-paid x402 settlement.\n\nBase x402 price is 0.10 USDC. The price is multiplied (up to 50×) by the\ncurrent search load: completed searches in the last 60 seconds and\nany upstream rate-limit response in the last 5 minutes. Always read\nthe latest `PAYMENT-REQUIRED` challenge before signing - the price\nyour client saw a moment ago may already be stale.\n",
           "security": [
             {
               "x402PaymentSignature": []
+            },
+            {
+              "brijSponsoredPreview": []
             }
           ],
           "requestBody": {
@@ -730,6 +734,12 @@
           "in": "header",
           "name": "PAYMENT-SIGNATURE",
           "description": "Base64-encoded x402 payment payload."
+        },
+        "brijSponsoredPreview": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-BRIJ-SPONSORED-SIGNATURE",
+          "description": "BRIJ gateway Ed25519 signature for sponsored preview calls. The signature covers version, timestamp, wallet address, method, host, path, and request body hash."
         }
       },
       "parameters": {
