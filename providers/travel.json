@@ -453,6 +453,16 @@
                 }
               }
             },
+            "409": {
+              "description": "Intent is not active, escrow is missing, funding is not exact, or `booking_already_requested` if a prior /book succeeded for this intent (retry has no effect; the worker is processing it).",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ErrorResponse"
+                  }
+                }
+              }
+            },
             "402": {
               "description": "x402 payment required or payment verification failed.",
               "headers": {
@@ -468,16 +478,6 @@
                   "schema": {
                     "type": "object",
                     "additionalProperties": true
-                  }
-                }
-              }
-            },
-            "409": {
-              "description": "Intent is not active, escrow is missing, funding is not exact, or `booking_already_requested` if a prior /book succeeded for this intent (retry has no effect; the worker is processing it).",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ErrorResponse"
                   }
                 }
               }
