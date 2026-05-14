@@ -1,15 +1,15 @@
 {
   "id": "travel",
   "name": "BRIJ Flight API",
-  "description": "Flight API for paid flight search, escrow-backed booking intents, booking execution, refund requests, and Duffel order status lookup.",
+  "description": "Flight API for paid flight search, escrow-backed booking intents, booking execution, refund requests, and airline order status lookup.",
   "use_when": "Use when the user wants to search flights, create a booking intent, book a flight, request a refund, or check flight order status.",
   "category": "travel",
   "tags": [
-    "travel",
-    "flights",
+    "airline",
     "booking",
-    "duffel",
-    "escrow"
+    "escrow",
+    "flights",
+    "travel"
   ],
   "payment_mode": "whitelisted",
   "x402": {
@@ -69,7 +69,7 @@
     "info": {
       "title": "BRIJ Flight API",
       "version": "1.0.0",
-      "description": "Production flight API for paid flight search, escrow-backed booking intents,\nand Duffel order status lookup.\n\n`POST /air/search`, `POST /air/intents`, `POST /air/intents/{intent_id}/book`,\nand `POST /air/intents/{intent_id}/refund-requests` are protected by x402.\nClients that do not send a valid `PAYMENT-SIGNATURE` header receive\n`402 Payment Required` with a `PAYMENT-REQUIRED` header and JSON payment\nrequirements body.\n"
+      "description": "Production flight API for paid flight search, escrow-backed booking intents,\nand airline order status lookup.\n\n`POST /air/search`, `POST /air/intents`, `POST /air/intents/{intent_id}/book`,\nand `POST /air/intents/{intent_id}/refund-requests` are protected by x402.\nClients that do not send a valid `PAYMENT-SIGNATURE` header receive\n`402 Payment Required` with a `PAYMENT-REQUIRED` header and JSON payment\nrequirements body.\n"
     },
     "servers": [
       {
@@ -170,8 +170,8 @@
             "flights"
           ],
           "operationId": "searchFlights",
-          "summary": "Search live Duffel flight offers.",
-          "description": "Paid x402 endpoint with dynamic pricing. Send a valid\n`PAYMENT-SIGNATURE` header to execute the search. Without payment,\nthe API returns `402 Payment Required` carrying the **current** price.\n\nBase price is 0.10 USDC. The price is multiplied (up to 50×) by the\ncurrent search load: completed searches in the last 60 seconds and\nany Duffel rate-limit response in the last 5 minutes. Always read\nthe latest `PAYMENT-REQUIRED` challenge before signing — the price\nyour client saw a moment ago may already be stale.\n",
+          "summary": "Search live flight offers.",
+          "description": "Paid x402 endpoint with dynamic pricing. Send a valid\n`PAYMENT-SIGNATURE` header to execute the search. Without payment,\nthe API returns `402 Payment Required` carrying the **current** price.\n\nBase price is 0.10 USDC. The price is multiplied (up to 50×) by the\ncurrent search load: completed searches in the last 60 seconds and\nany upstream rate-limit response in the last 5 minutes. Always read\nthe latest `PAYMENT-REQUIRED` challenge before signing - the price\nyour client saw a moment ago may already be stale.\n",
           "security": [
             {
               "x402PaymentSignature": []
@@ -246,7 +246,7 @@
               }
             },
             "501": {
-              "description": "Duffel is not configured.",
+              "description": "Upstream flight provider is not configured.",
               "content": {
                 "application/json": {
                   "schema": {
@@ -264,8 +264,8 @@
             "intents"
           ],
           "operationId": "createBookingIntent",
-          "summary": "Create an escrow-backed booking intent from a Duffel offer.",
-          "description": "Paid x402 endpoint. Send a valid `PAYMENT-SIGNATURE` header to create\nthe intent. Without payment, the API returns `402 Payment Required`.\n\nCreates the local booking intent and initializes its Solana escrow.\nThis does not fund the escrow, pay Duffel, or issue a ticket.\n",
+          "summary": "Create an escrow-backed booking intent from a selected offer.",
+          "description": "Paid x402 endpoint. Send a valid `PAYMENT-SIGNATURE` header to create\nthe intent. Without payment, the API returns `402 Payment Required`.\n\nCreates the local booking intent and initializes its Solana escrow.\nThis does not fund the escrow, pay the airline, or issue a ticket.\n",
           "security": [
             {
               "x402PaymentSignature": []
@@ -405,7 +405,7 @@
           ],
           "operationId": "requestBooking",
           "summary": "Pay the escrow and request booking.",
-          "description": "Paid x402 endpoint. The payment challenge is dynamic for the intent:\n`payTo` is the intent escrow address, `asset` is the expected escrow\nmint, and `amount` is the expected escrow amount.\n\nAfter x402 settlement, the API records passenger details, verifies exact\nescrow funding on-chain, and enqueues the booking worker. Duffel payment\nand escrow capture happen asynchronously.\n\nIf booking fails after x402 settlement, retry the same `/book` call;\nexcess funds remain refundable to `refund_wallet`.\n",
+          "description": "Paid x402 endpoint. The payment challenge is dynamic for the intent:\n`payTo` is the intent escrow address, `asset` is the expected escrow\nmint, and `amount` is the expected escrow amount.\n\nAfter x402 settlement, the API records passenger details, verifies exact\nescrow funding on-chain, and enqueues the booking worker. Airline payment\nand escrow capture happen asynchronously.\n\nIf booking fails after x402 settlement, retry the same `/book` call;\nexcess funds remain refundable to `refund_wallet`.\n",
           "security": [
             {
               "x402PaymentSignature": []
@@ -485,7 +485,7 @@
               }
             },
             "501": {
-              "description": "Duffel is not configured.",
+              "description": "Upstream flight provider is not configured.",
               "content": {
                 "application/json": {
                   "schema": {
@@ -685,8 +685,8 @@
           "tags": [
             "orders"
           ],
-          "operationId": "getDuffelOrder",
-          "summary": "Fetch Duffel order status.",
+          "operationId": "getAirOrder",
+          "summary": "Fetch airline order status.",
           "parameters": [
             {
               "name": "order_id",
@@ -700,7 +700,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Duffel order status.",
+              "description": "Airline order status.",
               "content": {
                 "application/json": {
                   "schema": {
@@ -952,8 +952,8 @@
             "funding_wallet",
             "refund_wallet",
             "offer_id",
-            "expected_duffel_amount",
-            "expected_duffel_currency",
+            "expected_ticket_amount",
+            "expected_ticket_currency",
             "expected_escrow_amount",
             "expected_escrow_mint",
             "fee_amount",
@@ -981,11 +981,11 @@
             "offer_id": {
               "type": "string"
             },
-            "expected_duffel_amount": {
+            "expected_ticket_amount": {
               "type": "integer",
               "format": "int64"
             },
-            "expected_duffel_currency": {
+            "expected_ticket_currency": {
               "type": "string",
               "example": "USD"
             },
@@ -1061,14 +1061,14 @@
               "type": "string",
               "format": "date-time"
             },
-            "duffel_order_id": {
+            "airline_order_id": {
               "type": "string"
             },
-            "duffel_payment_required_by": {
+            "payment_required_by": {
               "type": "string",
               "format": "date-time"
             },
-            "duffel_ticketed_at": {
+            "ticketed_at": {
               "type": "string",
               "format": "date-time"
             },
@@ -1117,7 +1117,7 @@
         },
         "PassengerInput": {
           "type": "object",
-          "description": "Passenger details. Field constraints mirror Duffel's /air/orders contract — values that Duffel would reject (e.g. gender other than 'm'/'f') are rejected by this API before settling x402, so funds stay in the agent's wallet on validation failure.",
+          "description": "Passenger details. Field constraints mirror the upstream airline contract; values the airline would reject (e.g. gender other than 'm'/'f') are rejected by this API before settling x402, so funds stay in the agent's wallet on validation failure.",
           "required": [
             "given_name",
             "family_name",
@@ -1158,7 +1158,7 @@
             },
             "gender": {
               "type": "string",
-              "description": "Biological sex as recorded on the travel document. Lowercase, exactly 'm' or 'f' (Duffel does not accept other values).",
+              "description": "Biological sex as recorded on the travel document. Lowercase, exactly 'm' or 'f' (the airline does not accept other values).",
               "enum": [
                 "m",
                 "f"
