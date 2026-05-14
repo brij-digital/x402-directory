@@ -32,10 +32,12 @@
         "name": "search",
         "endpoint": "POST /air/search",
         "after_success": [
-          "Show 3-5 best real offers from the response.",
-          "For each offer, show price, airline, departure time, arrival time, duration, and offer_id.",
+          "Show 3-5 best real offers from the response as numbered options.",
+          "For each option, show price, airline, departure time, arrival time, and duration.",
+          "Do not show raw offer_id unless the user explicitly asks.",
+          "Remember the offer_id for each option number and use it internally when creating the booking intent.",
           "Tell the user offers expire quickly.",
-          "Ask the user to choose one offer_id before creating an intent."
+          "Ask the user to choose by option number, airline, time, or price before creating an intent."
         ]
       },
       {
