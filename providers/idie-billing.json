@@ -1,0 +1,114 @@
+{
+  "id": "idie-billing",
+  "name": "Idie billing MCP",
+  "description": "Idie self-evolving autonomy RPC - pay-per-use via x402 (Solana USDC): count words, transform case, extract links/emails, readability",
+  "use_when": "Use when the user needs paid text utilities such as counting words, transforming text case, extracting links or emails, or assessing readability, served over an RPC endpoint.",
+  "category": "utils",
+  "tags": [
+    "idie",
+    "mcp",
+    "rpc",
+    "text",
+    "tools",
+    "x402"
+  ],
+  "payment_mode": "x402",
+  "x402": {
+    "http_base_url": "https://billing.ideatrace.cn",
+    "currency": "USDC",
+    "scheme": "exact",
+    "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+    "asset": "USDC",
+    "price": "$0.001 per call",
+    "pay_to": "FTFThhM9pgBgSmtE8dH3MiSaGBFSSBNcpymCTUzsZncx"
+  },
+  "manifest_url": "https://billing.ideatrace.cn/.well-known/x402",
+  "source_openapi_url": "https://billing.ideatrace.cn/openapi.json",
+  "capabilities": [
+    "count_words",
+    "text_transform",
+    "extract_links",
+    "extract_email",
+    "readability",
+    "billing_catalog"
+  ],
+  "how_to_call": "If you are using BRIJ Wallet MCP, read the openapi object in this provider file, POST to x402.http_base_url plus the /rpc path with {\"method\": \"<capability>\", \"params\": {...}}, then call the BRIJ MCP tool call_paid_api_endpoint.",
+  "openapi": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Idie billing RPC",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://billing.ideatrace.cn"
+      }
+    ],
+    "paths": {
+      "/health": {
+        "get": {
+          "summary": "Service health",
+          "responses": {
+            "200": {
+              "description": "ok"
+            }
+          }
+        }
+      },
+      "/rpc": {
+        "post": {
+          "summary": "Pay-per-use capability call (x402 exact scheme, USDC)",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "method": {
+                      "type": "string"
+                    },
+                    "params": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "method"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "ok"
+            },
+            "402": {
+              "description": "X-Payment-Required: x402 - payment_payload (USDC exact) to fulfill then retry"
+            }
+          }
+        }
+      },
+      "/.well-known/x402": {
+        "get": {
+          "summary": "x402 manifest (discovery)",
+          "responses": {
+            "200": {
+              "description": "manifest"
+            }
+          }
+        }
+      },
+      "/openapi.json": {
+        "get": {
+          "summary": "This OpenAPI document",
+          "responses": {
+            "200": {
+              "description": "json"
+            }
+          }
+        }
+      }
+    }
+  }
+}
