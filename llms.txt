@@ -14,6 +14,7 @@ Open exactly one provider file that matches the user's task. Each provider file 
 - Crypto news: https://x402catalog.com/providers/messari-news.json
 - Wallet and token intelligence: https://x402catalog.com/providers/nansen-wallet-intel.json
 - Solana JSON-RPC: https://x402catalog.com/providers/quicknode-solana-mainnet.json
+- Idie billing MCP (text utilities, pay-per-use): https://x402catalog.com/providers/idie-billing.json
 
 ## How To Use With BRIJ Wallet MCP
 
